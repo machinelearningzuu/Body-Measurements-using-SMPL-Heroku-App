@@ -12,6 +12,7 @@ from measurement import Body3D
 
 app = Flask(__name__)
 data_dir = os.path.join(os.getcwd(), 'data')
+heroku_url = 'https://body-measurement-app.herokuapp.com/predict'
 
 def preprocess_image(image):
     if image.shape[-1] == 1:
@@ -45,6 +46,8 @@ def predict():
             'chest' : chest_length,
             'waist' : waist_length
             }
+
+    response = requests.post(heroku_url, response)
 
     return jsonify(response)
 
