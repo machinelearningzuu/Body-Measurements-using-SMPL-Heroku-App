@@ -1,6 +1,5 @@
 import os
 import json
-import warnings
 import cv2 as cv
 import pywavefront
 import numpy as np
@@ -13,7 +12,6 @@ from measurement import Body3D
 
 app = Flask(__name__)
 data_dir = os.path.join(os.getcwd(), 'data')
-warnings.simplefilter(action="ignore", category=DeprecationWarning)
 
 def preprocess_image(image):
     if image.shape[-1] == 1:
