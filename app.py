@@ -51,4 +51,4 @@ def predict():
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(host=heroku_url, debug=True, port=5000, threaded=False, use_reloader=False)
+    app.run(debug=True, host=heroku_url, port=5000, threaded=False, use_reloader=False)
