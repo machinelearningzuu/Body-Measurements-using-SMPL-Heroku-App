@@ -22,7 +22,7 @@ def preprocess_image(image):
         image = cv.resize(image, (224, 224), cv.INTER_AREA)
         return image
 
-@app.route("/predict", methods=["POST"])
+@app.route("/predict", methods=['GET','POST'])
 def predict():
     dogimagefile= request.files['image'].read()
     # dogimage = np.fromstring(dogimagefile, np.uint8)
@@ -48,9 +48,7 @@ def predict():
             'waist' : waist_length
             }
 
-    response = requests.post(heroku_url, response)
-
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000, threaded=False, use_reloader=False)
+    app.run(host=heroku_url, debug=True, port=5000, threaded=False, use_reloader=False)
