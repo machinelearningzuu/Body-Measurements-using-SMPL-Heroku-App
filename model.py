@@ -1,6 +1,7 @@
-import numpy as np
-import trimesh
 import math
+import random
+import trimesh
+import numpy as np
 
 def getMinX(polygon):
     return polygon.bounds[0]
@@ -162,9 +163,9 @@ class Body3D(object):
         self.hip_location = getHip(self.sections, self.crotch_location)[1]
 
     def getMeasurements(self):
-        height = getHeight(self.mesh)
-        chest_length = getChest(self.sections, self.armpits_location)[2]
-        waist_length = getWaist(self.sections, self.hip_location)[2]
+        height = getHeight(self.mesh) + random.uniform(-0.07, 0.07)
+        chest_length = getChest(self.sections, self.armpits_location)[2] + random.uniform(-0.07, 0.07)
+        waist_length = getWaist(self.sections, self.hip_location)[2] + random.uniform(-0.07, 0.07)
 
         return height, chest_length, waist_length
 
