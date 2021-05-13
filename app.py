@@ -57,12 +57,17 @@ def predict():
 
     measurments = body.getMeasurements()
     measurments = scale_output(measurments)
-    height, chest_length, waist_length = measurments
+    height, chest_length, waist_length, hip_length, thigh_length, neck_length, neck_hip_length = measurments
 
     response = {
-            'height': height,
-            'chest' : chest_length,
-            'waist' : waist_length
+            'height'   : height,
+            'chest'    : chest_length,
+            'waist'    : waist_length,
+            'hip'      : hip_length,
+            'thigh'    : thigh_length,
+            'neck'     : neck_length,
+            'neck_hip' : neck_hip_length,
+
             }
 
     return jsonify(response)

@@ -128,6 +128,11 @@ def getHeight(mesh):
     maxY = slice_2D.bounds[1][1]
     return (maxY - minY) # meters
 
+def getThighOutline(sections, crotch_location):
+    thigh_location = crotch_location - 1
+    polygon = getLargerAreaPolygon(sections[thigh_location])
+    return sections[thigh_location], thigh_location, polygon.length
+
 def getHip(sections, crotch_location):
     cont = crotch_location
     stop = False
@@ -149,6 +154,16 @@ def getHip(sections, crotch_location):
         
     return hip, position, length
 
+
+def getNeck(sections):
+    location_percentage_neck =  86.25 # percentage
+    approximate_location_neck = math.floor(location_percentage_neck*len(sections)/100)
+    polygon = getLargerAreaPolygon(sections[approximate_location_neck])
+    return sections[approximate_location_neck], approximate_location_neck, polygon.length
+
+def getNeckHipLength(neck_location, hip_location, size_slice):
+    return (neck_location - hip_location)*size_slice
+    
 class Body3D(object):
     def __init__(self, vertices, faces, steps=0.005, levels=[-1.5, 1.5]):
         self.vertices = vertices
@@ -166,8 +181,13 @@ class Body3D(object):
         height = getHeight(self.mesh) + random.uniform(-0.07, 0.07)
         chest_length = getChest(self.sections, self.armpits_location)[2] + random.uniform(-0.07, 0.07)
         waist_length = getWaist(self.sections, self.hip_location)[2] + random.uniform(-0.07, 0.07)
+        hip_length = getHip(self.sections, self.crotch_location)[2]+ random.uniform(-0.07, 0.07)
+        thigh_length = getThighOutline(self.sections, self.crotch_location)[2]+ random.uniform(-0.07, 0.07)
+        neck_location, neck_length = getNeck(self.sections)[1:]
+        neck_length += random.uniform(-0.07, 0.07)
+        neck_hip_length = getNeckHipLength(neck_location, self.hip_location, self.steps)+ random.uniform(-0.07, 0.07)
 
-        return height, chest_length, waist_length
+        return height, chest_length, waist_length, hip_length, thigh_length, neck_length, neck_hip_length
 
     def height(self):
         return getHeight(self.mesh)
